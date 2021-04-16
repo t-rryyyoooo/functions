@@ -1,5 +1,6 @@
 import argparse
 import SimpleITK as sitk
+from pathlib import Path
 
 args = None
 
@@ -7,8 +8,9 @@ def parseArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument("imagePath", help="$HOME/Desktop/data/kits19/case_00000")
     parser.add_argument("savePath", help="$HOME/Desktop/data/kits19/case_00000")
+    parser.add_argument("--input_name", default="imaging.nii.gz")
+    parser.add_argument("--save_name", default="imaging_resampled.nii.gz")
     parser.add_argument("--spacing", default=[1.0, 1.0, 1.0], type=float, nargs=3)
-    parser.add_argument("--prefix", default="resampled_")
 
     args = parser.parse_args()
     return args
@@ -46,22 +48,15 @@ def changeSpacing(img, spacing, is_label=False):
     return resampled
 
 def main(args):
-    imagePath = args.imagePath + "/imaging.nii.gz"
-    labelPath = args.imagePath + "/segmentation.nii.gz"
+    imagePath = Path(args.imagePath) / args.input_name
 
-    image = sitk.ReadImage(imagePath)
-    label = sitk.ReadImage(labelPath)
+    image = sitk.ReadImage(str(imagePath))
     resampledImage = changeSpacing(image, [*args.spacing])
-    resampledLabel = changeSpacing(label, [*args.spacing])
 
-    saveImagePath = args.savePath + "/" + args.prefix + "imaging.nii.gz"
-    saveLabelPath = args.savePath + "/" + args.prefix + "segmentation.nii.gz"
+    saveImagePath = Path(args.savePath) / args.save_name
 
     print("saving Image to {}...".format(saveImagePath))
-    sitk.WriteImage(resampledImage, saveImagePath)
-    print("Done.")
-    print("saving Image to {}...".format(saveImagePath))
-    sitk.WriteImage(resampledLabel, saveLabelPath)
+    sitk.WriteImage(resampledImage, str(saveImagePath), True)
     print("Done.")
 
 if __name__=="__main__":
