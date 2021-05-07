@@ -25,6 +25,7 @@ readonly SAVE_DIRECTORY=$(eval echo $(cat ${JSON_FILE} | jq -r ".save_directory"
 readonly INPUT_NAME=$(cat ${JSON_FILE} | jq -r ".input_name")
 readonly SAVE_NAME=$(cat ${JSON_FILE} | jq -r ".save_name")
 readonly SPACING=$(cat ${JSON_FILE} | jq -r ".spacing")
+readonly IS_LABEL=$(cat ${JSON_FILE} | jq -r ".is_label")
 
 readonly NUM_ARRAY=$(cat ${JSON_FILE} | jq -r ".num_array[]")
 readonly LOG_FILE=$(eval echo $(cat ${JSON_FILE} | jq -r ".log_file"))
@@ -44,8 +45,15 @@ do
  echo "input_name:${INPUT_NAME}"
  echo "save_name:${SAVE_NAME}"
  echo "spacing:${SPACING}"
+ echo "is_label:${IS_LABEL}"
 
- python3 changeSpacing.py ${data} ${data} --input_name ${INPUT_NAME} --save_name ${SAVE_NAME} --spacing ${SPACING}
+ if $IS_LABELl; then
+  is_label="--is_label"
+ else
+  is_label=""
+ fi
+
+ python3 changeSpacing.py ${data} ${data} --input_name ${INPUT_NAME} --save_name ${SAVE_NAME} --spacing ${SPACING} ${is_label}
 
 
 

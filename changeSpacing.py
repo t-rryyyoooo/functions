@@ -11,6 +11,8 @@ def parseArgs():
     parser.add_argument("--input_name", default="imaging.nii.gz")
     parser.add_argument("--save_name", default="imaging_resampled.nii.gz")
     parser.add_argument("--spacing", default=[1.0, 1.0, 1.0], type=float, nargs=3)
+    parser.add_argument("--is_label", action="store_true")
+
 
     args = parser.parse_args()
     return args
@@ -48,10 +50,11 @@ def changeSpacing(img, spacing, is_label=False):
     return resampled
 
 def main(args):
+    print(args)
     imagePath = Path(args.imagePath) / args.input_name
 
     image = sitk.ReadImage(str(imagePath))
-    resampledImage = changeSpacing(image, [*args.spacing])
+    resampledImage = changeSpacing(image, [*args.spacing], is_label=args.is_label)
 
     saveImagePath = Path(args.savePath) / args.save_name
 
