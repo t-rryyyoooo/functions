@@ -1,2 +1,5 @@
 input/
 test/
+__pycache__/
+fail/
+secret.py
