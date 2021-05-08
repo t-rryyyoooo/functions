@@ -18,13 +18,14 @@ def parseArgs():
     return args
 
 def main(args):
+    print(args)
     image = sitk.ReadImage(args.image_path)
     ref   = sitk.ReadImage(args.ref_path)
 
     image_array = sitk.GetArrayFromImage(image)
 
     unified_image = getImageWithMeta(image_array[::-1, ::-1, :], ref)
-    Path(args.save_path).parent.mkdir(exist_ok=True)
+    Path(args.save_path).parent.mkdir(exist_ok=True, parents=True)
 
     sitk.WriteImage(unified_image, args.save_path)
 
