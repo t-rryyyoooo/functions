@@ -1,9 +1,9 @@
 {
-    "data_directory" : "$HOME/Desktop/data/Abdomen",
-    "save_directory" : "$HOME/Desktop/data/Abdomen",
-    "ref_path" : "$HOME/Desktop/data/tsukubaData/allData/case_k_001/SE3_resampled.nii.gz",
-    "input_name" : "segmentation_resampled_2.nii.gz",
-    "save_name" : "segmentation_resampled_2_uni.nii.gz",
+    "data_directory" : "/Users/tanimotoryou/Documents/lab/imageData/Abdomen",
+    "save_directory" : "/Users/tanimotoryou/Desktop",
+    "ref_path" : "/Users/tanimotoryou/Desktop/SE3_resampled.nii.gz",
+    "input_name" : "imaging_resampled.nii.gz",
+    "save_name" : "imaging_resampled.nii.gz",
     "num_array" : ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"],
     "log_file" : "fail/unifyDirection.txt"
     }
