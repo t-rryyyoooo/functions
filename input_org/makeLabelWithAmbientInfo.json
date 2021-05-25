@@ -1,10 +1,10 @@
 {
-    "data_directory" : "$HOME/Desktop/data/tsukubaData/kidney",
-    "save_directory" : "$HOME/Desktop/data/tsukubaData/kidney", 
+    "data_directory" : "/sandisk/data/Abdomen",
+    "save_directory" : "test", 
     "label_name" : "segmentation_resampled.nii.gz",
-    "save_name" : "mask_resampled.mha",
-    "radius" : -1,
-    "num_class" : -1,
+    "save_name" : "test.npy",
+    "radius" : 1,
+    "num_class" : 14,
     "num_array" : ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"],
     "log_file" : "fail/makeLabelWithAmbientInfo.txt"
 }
