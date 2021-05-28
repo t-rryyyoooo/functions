@@ -3,7 +3,7 @@
 #Input
 # Input 
 readonly INPUT_DIRECTORY="input"
-echo -n "Is json file name makeLabelWithAmbientInfo.json?[y/n]:"
+echo -n "Is json file name remakeLabel.json?[y/n]:"
 read which
 while [ ! $which = "y" -a ! $which = "n" ]
 do
@@ -13,7 +13,7 @@ done
 
 # Specify json file path.
 if [ $which = "y" ];then
- JSON_NAME="makeLabelWithAmbientInfo.json"
+ JSON_NAME="remakeLabel.json"
 else
  echo -n "JSON_FILE_NAME="
  read JSON_NAME
@@ -25,8 +25,9 @@ readonly DATA_DIRECTORY=$(eval echo $(cat ${JSON_FILE} | jq -r ".data_directory"
 readonly SAVE_DIRECTORY=$(eval echo $(cat ${JSON_FILE} | jq -r ".save_directory"))
 readonly LABEL_NAME=$(cat ${JSON_FILE} | jq -r ".label_name")
 readonly SAVE_NAME=$(cat ${JSON_FILE} | jq -r ".save_name")
-readonly RADIUS=$(cat ${JSON_FILE} | jq -r ".radius")
 readonly NUM_CLASS=$(cat ${JSON_FILE} | jq -r ".num_class")
+readonly IGNORE_CLASSES=$(cat ${JSON_FILE} | jq -r ".ignore_classes")
+readonly SQUEEZE=$(cat ${JSON_FILE} | jq -r ".squeeze")
 readonly NUM_ARRAY=$(cat ${JSON_FILE} | jq -r ".num_array[]")
 readonly LOG_FILE=$(cat ${JSON_FILE} | jq -r ".log_file")
 
@@ -39,12 +40,22 @@ do
  label="${DATA_DIRECTORY}/case_${number}/${LABEL_NAME}"
  save="${SAVE_DIRECTORY}/case_${number}/${SAVE_NAME}"
 
- echo "label:$label"
- echo "save:$save"
- echo "RADIUS:${RADIUS}"
- echo "NUM_CLASS:${NUM_CLASS}"
+ echo "LABEL:$label"
+ echo "SAVE:$save"
+ echo "NUM_CLASS:$NUM_CLASS"
+ echo "IGNORE_CLASSES:${IGNORE_CLASSES}"
+ echo "SQUEEZE:${SQUEEZE}"
 
- python3 makeLabelWithAmbientInfo.py ${label} ${save} -r ${RADIUS} --num_class ${NUM_CLASS}
+ if ${SQUEEZE}; then
+     squeeze="--squeeze"
+ else
+     squeeze=""
+ fi
+
+  
+
+
+ python3 remakeLabel.py ${label} ${save} --num_class ${NUM_CLASS} --ignore_classes ${IGNORE_CLASSES} ${squeeze}
 
  # Judge if it works.
  if [ $? -eq 0 ]; then
