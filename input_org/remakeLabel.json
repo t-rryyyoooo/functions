@@ -1,8 +1,8 @@
 {
-    "data_directory" : "/Users/tanimotoryou/Documents/lab/imageData/Abdomen",
-    "save_directory" : "$HOME/Desktop", 
+    "data_directory" : "$HOME/Desktop/data/Abdomen",
+    "save_directory" : "$HOME/Desktop/data/Abdomen", 
     "label_name" : "segmentation_resampled.nii.gz",
-    "save_name" : "label.nii.gz",
+    "save_name" : "segmentation_12367_resampled.nii.gz",
     "num_class" : 14,
     "ignore_classes" : "1 2 3 6 7",
     "squeeze" : true,
