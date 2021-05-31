@@ -1,6 +1,9 @@
 import argparse
 import SimpleITK as sitk
 from pathlib import Path
+import sys
+sys.path.append("..")
+from utils.utils import printArgs
 
 args = None
 
@@ -50,7 +53,8 @@ def changeSpacing(img, spacing, is_label=False):
     return resampled
 
 def main(args):
-    print(args)
+    printArgs(args)
+
     imagePath = Path(args.imagePath) / args.input_name
 
     image = sitk.ReadImage(str(imagePath))

@@ -40,12 +40,6 @@ do
  label="${DATA_DIRECTORY}/case_${number}/${LABEL_NAME}"
  save="${SAVE_DIRECTORY}/case_${number}/${SAVE_NAME}"
 
- echo "LABEL:$label"
- echo "SAVE:$save"
- echo "NUM_CLASS:$NUM_CLASS"
- echo "IGNORE_CLASSES:${IGNORE_CLASSES}"
- echo "SQUEEZE:${SQUEEZE}"
-
  if ${SQUEEZE}; then
      squeeze="--squeeze"
  else

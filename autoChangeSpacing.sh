@@ -40,14 +40,7 @@ for number in ${NUM_ARRAY[@]}
 do
  data="${DATA_DIRECTORY}/case_${number}"
 
- echo "input_dir:${data}"
- echo "save_dir:${data}"
- echo "input_name:${INPUT_NAME}"
- echo "save_name:${SAVE_NAME}"
- echo "spacing:${SPACING}"
- echo "is_label:${IS_LABEL}"
-
- if $IS_LABELl; then
+ if $IS_LABEL; then
   is_label="--is_label"
  else
   is_label=""

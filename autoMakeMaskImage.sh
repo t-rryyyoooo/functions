@@ -39,10 +39,6 @@ do
  label="${data}/${LABEL_NAME}"
  save="${data}/${MASK_NAME}"
 
- echo "LABEL:$label"
- echo "SAVE:$save"
- echo "MASK_NUM:$MASK_NUM"
-
  python3 makeMaskImage.py ${label} ${save} --mask_number ${MASK_NUM}
 
  # Judge if it works.

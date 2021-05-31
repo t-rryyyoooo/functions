@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 import sys
 sys.path.append("..")
-from utils.utils import getImageWithMeta
+from utils.utils import getImageWithMeta, printArgs
 
 def parseArgs():
     parser = argparse.ArgumentParser()
@@ -21,6 +21,8 @@ def parseArgs():
 
 
 def main(args):
+    printArgs(args)
+
     label       = sitk.ReadImage(args.label_path)
     label_array = sitk.GetArrayFromImage(label)
 

@@ -3,7 +3,7 @@ import SimpleITK as sitk
 import numpy as np
 import sys
 sys.path.append("..")
-from utils.utils import getImageWithMeta
+from utils.utils import getImageWithMeta, printArgs
 from pathlib import Path
 
 def parseArgs():
@@ -18,7 +18,8 @@ def parseArgs():
     return args
 
 def main(args):
-    print(args)
+    printArgs(args)
+
     image = sitk.ReadImage(args.image_path)
     ref   = sitk.ReadImage(args.ref_path)
 

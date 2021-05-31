@@ -40,10 +40,6 @@ do
  image="${DATA_DIRECTORY}/case_${number}/${INPUT_NAME}"
  save="${SAVE_DIRECTORY}/case_${number}/${SAVE_NAME}"
 
- echo "image:${image}"
- echo "REF_PATH:${REF_PATH}"
- echo "save:${save}"
-
  python3 unifyDirection.py ${image} ${REF_PATH} ${save}
 
  # Judge if it works.
