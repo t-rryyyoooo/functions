@@ -3,7 +3,7 @@
 #Input
 # Input 
 readonly INPUT_DIRECTORY="input"
-echo -n "Is json file name makeMaskImage.json?[y/n]:"
+echo -n "Is json file name countROI.json?[y/n]:"
 read which
 while [ ! $which = "y" -a ! $which = "n" ]
 do
@@ -13,7 +13,7 @@ done
 
 # Specify json file path.
 if [ $which = "y" ];then
- JSON_NAME="makeMaskImage.json"
+ JSON_NAME="countROI.json"
 else
  echo -n "JSON_FILE_NAME="
  read JSON_NAME
@@ -24,8 +24,7 @@ readonly JSON_FILE="${INPUT_DIRECTORY}/${JSON_NAME}"
 readonly DATA_DIRECTORY=$(eval echo $(cat ${JSON_FILE} | jq -r ".data_directory"))
 readonly SAVE_DIRECTORY=$(eval echo $(cat ${JSON_FILE} | jq -r ".save_directory"))
 readonly LABEL_NAME=$(cat ${JSON_FILE} | jq -r ".label_name")
-readonly MASK_NAME=$(cat ${JSON_FILE} | jq -r ".mask_name")
-readonly MASK_NUM=$(cat ${JSON_FILE} | jq -r ".mask_num")
+readonly SAVE_NAME=$(cat ${JSON_FILE} | jq -r ".save_name")
 readonly NUM_ARRAY=$(cat ${JSON_FILE} | jq -r ".num_array[]")
 readonly LOG_FILE=$(cat ${JSON_FILE} | jq -r ".log_file")
 
@@ -35,11 +34,10 @@ date >> $LOG_FILE
 for number in ${NUM_ARRAY[@]}
 do
 
- data="${DATA_DIRECTORY}/case_${number}"
- label="${data}/${LABEL_NAME}"
- save="${SAVE_DIRECTORY}/case_${number}/${MASK_NAME}"
+ label="${DATA_DIRECTORY}/case_${number}/${LABEL_NAME}"
+ save="${SAVE_DIRECTORY}/case_${number}/${SAVE_NAME}"
 
- python3 makeMaskImage.py ${label} ${save} --mask_number ${MASK_NUM}
+ python3 makeMaskImage.py ${label} ${save} 
 
  # Judge if it works.
  if [ $? -eq 0 ]; then
