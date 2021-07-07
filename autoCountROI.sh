@@ -37,7 +37,7 @@ do
  label="${DATA_DIRECTORY}/case_${number}/${LABEL_NAME}"
  save="${SAVE_DIRECTORY}/case_${number}/${SAVE_NAME}"
 
- python3 makeMaskImage.py ${label} ${save} 
+ python3 countROI.py ${label} ${save} 
 
  # Judge if it works.
  if [ $? -eq 0 ]; then

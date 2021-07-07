@@ -4,7 +4,7 @@ import SimpleITK as sitk
 from itertools import product
 import sys
 sys.path.append("..")
-from utils.utils import getImageWithMeta
+from utils.utils import getImageWithMeta, printArgs
 from collections import deque
 from pathlib import Path
 
@@ -72,13 +72,14 @@ class DFS():
 
                         self.stack.append(dist_index)
 
+            print(self.roi_array.max())
+
 def main(args):
+    printArgs(args)
     label       = sitk.ReadImage(args.label_path)
     label_array = sitk.GetArrayFromImage(label)
 
     dfs = DFS(label_array)
-    roi = getImageWithMeta(dfs.roi_array, label)
-    sitk.WriteImage(roi, args.save_path.replace("label_roi.mha", "label_roi_org.mha"), True)
     dfs()
 
     roi = getImageWithMeta(dfs.roi_array, label)
