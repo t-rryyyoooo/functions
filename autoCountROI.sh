@@ -25,6 +25,7 @@ readonly DATA_DIRECTORY=$(eval echo $(cat ${JSON_FILE} | jq -r ".data_directory"
 readonly SAVE_DIRECTORY=$(eval echo $(cat ${JSON_FILE} | jq -r ".save_directory"))
 readonly LABEL_NAME=$(cat ${JSON_FILE} | jq -r ".label_name")
 readonly SAVE_NAME=$(cat ${JSON_FILE} | jq -r ".save_name")
+readonly NUM_LEFT_AREA=$(cat ${JSON_FILE} | jq -r ".num_left_area")
 readonly NUM_ARRAY=$(cat ${JSON_FILE} | jq -r ".num_array[]")
 readonly LOG_FILE=$(cat ${JSON_FILE} | jq -r ".log_file")
 
@@ -37,7 +38,7 @@ do
  label="${DATA_DIRECTORY}/case_${number}/${LABEL_NAME}"
  save="${SAVE_DIRECTORY}/case_${number}/${SAVE_NAME}"
 
- python3 makeMaskImage.py ${label} ${save} 
+ python3 countROI.py ${label} ${save} --num_left_area ${NUM_LEFT_AREA}
 
  # Judge if it works.
  if [ $? -eq 0 ]; then

@@ -4,7 +4,7 @@ import SimpleITK as sitk
 from itertools import product
 import sys
 sys.path.append("..")
-from utils.utils import getImageWithMeta
+from utils.utils import getImageWithMeta, printArgs
 from collections import deque
 from pathlib import Path
 
@@ -13,13 +13,14 @@ def parseArgs():
 
     parser.add_argument("label_path")
     parser.add_argument("save_path")
+    parser.add_argument("--num_left_area", default=-1, type=int)
 
     args = parser.parse_args()
 
     return args
 
 class DFS():
-    def __init__(self, label_array):
+    def __init__(self, label_array, num_left_area=-1):
         self.label_array = label_array
         self.roi_array   = np.zeros_like(label_array)
 
@@ -27,6 +28,7 @@ class DFS():
         self.size_list = np.array(self.label_array.shape)
 
 
+        self.num_left_area = num_left_area
         self.stack = deque([])
         self.cnt   = 0
 
@@ -44,6 +46,22 @@ class DFS():
         ll = l.copy()
         ll[position] = value
         return ll
+
+    def leaveBiggerArea(self):
+        if self.num_left_area < 0:
+            return array
+        else:
+            print("Removing small areas...")
+            roi_size_list = [(self.roi_array == i).sum() for i in range(1, self.roi_array.max() + 1)]
+            argsort_list  = np.argsort(roi_size_list)[::-1]
+
+            left_array = np.zeros_like(self.roi_array)
+            for i in argsort_list[:self.num_left_area]:
+                left_array += (self.roi_array == (i + 1)).astype(np.uint8)
+
+            print("Left {} area.".format(self.num_left_area))
+
+            return left_array
 
     def __call__(self):
         for new_index in self.scanVoxels():
@@ -72,11 +90,16 @@ class DFS():
 
                         self.stack.append(dist_index)
 
+            print("The number of vovels in {} ROI: ".format(self.cnt), (self.roi_array == self.cnt).sum())
+
+        self.roi_array = self.leaveBiggerArea()
+
 def main(args):
+    printArgs(args)
     label       = sitk.ReadImage(args.label_path)
     label_array = sitk.GetArrayFromImage(label)
 
-    dfs = DFS(label_array)
+    dfs = DFS(label_array, num_left_area=args.num_left_area)
     roi = getImageWithMeta(dfs.roi_array, label)
     sitk.WriteImage(roi, args.save_path.replace("label_roi.mha", "label_roi_org.mha"), True)
     dfs()
