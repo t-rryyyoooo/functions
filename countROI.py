@@ -99,9 +99,7 @@ def main(args):
     label       = sitk.ReadImage(args.label_path)
     label_array = sitk.GetArrayFromImage(label)
 
-    dfs = DFS(label_array, num_left_area=args.num_left_area)
-    roi = getImageWithMeta(dfs.roi_array, label)
-    sitk.WriteImage(roi, args.save_path.replace("label_roi.mha", "label_roi_org.mha"), True)
+    dfs = DFS(label_array)
     dfs()
 
     roi = getImageWithMeta(dfs.roi_array, label)
