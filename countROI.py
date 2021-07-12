@@ -49,7 +49,7 @@ class DFS():
 
     def leaveBiggerArea(self):
         if self.num_left_area < 0:
-            return array
+            return self.roi_array
         else:
             print("Removing small areas...")
             roi_size_list = [(self.roi_array == i).sum() for i in range(1, self.roi_array.max() + 1)]
@@ -99,7 +99,7 @@ def main(args):
     label       = sitk.ReadImage(args.label_path)
     label_array = sitk.GetArrayFromImage(label)
 
-    dfs = DFS(label_array)
+    dfs = DFS(label_array, num_left_area=args.num_left_area)
     dfs()
 
     roi = getImageWithMeta(dfs.roi_array, label)
