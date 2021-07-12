@@ -1,0 +1,10 @@
+{
+    "data_directory" : "/sandisk/data/tsukubaData/liver",
+    "save_directory" : "/sandisk/data/tsukubaData/liver",
+    "label_name" : "pred_liver_resampled.nii.gz",
+    "save_name" : "pred_liver_resampled_roi.nii.gz",
+    "num_left_area" : 1,
+    "num_array" : ["199", "200", "201", "202", "203", "204", "205", "206", "207", "208", "209", "210", "211", "212", "213", "214", "215", "216", "217", "218"],
+    "log_file" : "fail/countROI.txt"
+}
+
