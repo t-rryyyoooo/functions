@@ -7,6 +7,7 @@ def parseArgs():
     parser.add_argument("--target_name")
     parser.add_argument("--knot", default=", ")
     parser.add_argument('--need_double_mark', action="store_true", help='True -> "000", "001", ..., False -> 000, 001')
+    parser.add_argument('--ignore_id', nargs="*", default=[])
 
     args = parser.parse_args()
 
@@ -23,6 +24,8 @@ def main(args):
 
     for target in sorted(target_dir.glob(target_name)):
         ID     = str(target).split("/")[idx][5:]
+        if ID in args.ignore_id:
+            continue
         if args.need_double_mark:
             output = '"{}"'.format(ID)
         else:
