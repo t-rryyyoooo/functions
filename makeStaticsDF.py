@@ -31,6 +31,7 @@ def main(args):
 
     suffix_list = ["mean", "std", "min", "median", "max"]
     d[args.label_index + "_size"] = []
+    d[args.label_index + "_size_ratio"] = []
     for image_index in args.image_indices:
         for suffix in suffix_list:
             index = image_index + "_" + args.label_index + "_" + suffix
@@ -51,13 +52,15 @@ def main(args):
         for image_name in args.image_names:
             image_path  = directory / image_name
             image_array = sitk.GetArrayFromImage(sitk.ReadImage(str(image_path)))
-            print(image_array.shape, label_array.shape)
+
             masked_image_array_list.append(np.ma.masked_array(image_array, (label_array == 0)))
 
 
         d["ID"].append(ID)
         size = (label_array > 0).sum()
         d[args.label_index + "_size"].append(size)
+        size_ratio = size / np.prod(label_array.shape)
+        d[args.label_index + "_size_ratio"].append(size_ratio)
 
         for masked_image_array, image_index in zip(masked_image_array_list, args.image_indices):
             mean = np.ma.mean(masked_image_array)
