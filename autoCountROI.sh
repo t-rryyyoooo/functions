@@ -1,5 +1,13 @@
 #!/bin/bash
 
+generateArgumentForBool(){
+ if $1;then
+  echo "$2"
+ else
+  echo ""
+ fi
+}
+
 #Input
 # Input 
 readonly INPUT_DIRECTORY="input"
