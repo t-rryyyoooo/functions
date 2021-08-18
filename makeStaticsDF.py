@@ -7,6 +7,7 @@ import sys
 sys.path.append("..")
 from utils.utils import printArgs
 from tqdm import tqdm
+from models.preprocessing import ClipValues
 
 def parseArgs():
     parser = argparse.ArgumentParser()
@@ -18,12 +19,20 @@ def parseArgs():
     parser.add_argument("--image_indices", nargs="*", default=["SE2", "SE3"])
     parser.add_argument("--label_index", default="CCRCC" )
     parser.add_argument("--search_axis", default=0, type=int)
+    parser.add_argument("--clip_min", type=float)
+    parser.add_argument("--clip_max", type=float)
 
     args = parser.parse_args()
 
     return args
 
 def main(args):
+    cv = ClipValues(
+            input_min_value  = args.clip_min,
+            input_max_value  = args.clip_max,
+            target_min_value = args.clip_min,
+            target_max_value = args.clip_max
+            )
     printArgs(args)
 
     d = dict()
@@ -52,6 +61,7 @@ def main(args):
         for image_name in args.image_names:
             image_path  = directory / image_name
             image_array = sitk.GetArrayFromImage(sitk.ReadImage(str(image_path)))
+            image_array, _ = cv(image_array, image_array)
 
             masked_image_array_list.append(np.ma.masked_array(image_array, (label_array == 0)))
 
