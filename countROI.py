@@ -90,7 +90,7 @@ class DFS():
 
             print("The number of vovels in {} ROI: ".format(self.cnt), (self.roi_array == self.cnt).sum())
 
-        self.roi_array = self.leaveBiggerArea()
+        self.roi_array = self.leaveBiggerArea().astype(np.uint8)
 
 def main(args):
     printArgs(args)
