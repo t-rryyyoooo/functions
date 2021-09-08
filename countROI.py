@@ -22,7 +22,7 @@ def parseArgs():
 class DFS():
     def __init__(self, label_array, num_left_area=-1):
         self.label_array = label_array
-        self.roi_array   = np.zeros_like(label_array)
+        self.roi_array   = np.zeros_like(label_array, dtype=int)
 
         self.zero_list = np.array([0] * self.label_array.ndim)
         self.size_list = np.array(self.label_array.shape)
@@ -57,7 +57,7 @@ class DFS():
 
             left_array = np.zeros_like(self.roi_array)
             for i in argsort_list[:self.num_left_area]:
-                left_array += (self.roi_array == (i + 1)).astype(np.uint8)
+                left_array += (self.roi_array == (i + 1)).astype(int)
 
             print("Left {} area.".format(self.num_left_area))
 
@@ -66,15 +66,13 @@ class DFS():
     def __call__(self):
         for new_index in self.scanVoxels():
             self.cnt += 1
-            self.stack.append(list(new_index) + [self.cnt])
+            self.stack.append(list(new_index))
             print("Start index: {}".format(new_index))
             print("The number of ROI: {}".format(self.cnt))
 
             while self.stack:
-                index_cnt = self.stack.pop()
-                index     = index_cnt[:-1]
-                idx       = tuple([[i] for i in index_cnt[:-1]])
-                cnt       = index_cnt[-1]
+                index = self.stack.pop()
+                idx       = tuple([[i] for i in index])
                 if (index < self.zero_list).any() or (index >= self.size_list).any():
                     continue
 
@@ -86,7 +84,7 @@ class DFS():
                 for i in range(self.label_array.ndim):
                     for r in [-1, 1]:
                         ci  = index[i] + r
-                        dist_index = self.changeValueInList(index_cnt, i, ci)
+                        dist_index = self.changeValueInList(index, i, ci)
 
                         self.stack.append(dist_index)
 
