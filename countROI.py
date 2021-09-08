@@ -81,7 +81,7 @@ class DFS():
                 if self.label_array[idx] == 0 or self.roi_array[idx] > 0:
                     continue
 
-                self.roi_array[idx] = cnt
+                self.roi_array[idx] = self.cnt
 
                 for i in range(self.label_array.ndim):
                     for r in [-1, 1]:
