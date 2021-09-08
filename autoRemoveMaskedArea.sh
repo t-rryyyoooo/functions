@@ -40,7 +40,7 @@ do
  mask="${DATA_DIRECTORY}/case_${number}/${MASK_NAME}"
  save="${SAVE_DIRECTORY}/case_${number}/${SAVE_NAME}"
 
- python3 dilateLabel.py ${image} ${mask_path} ${save} 
+ python3 removeMaskedArea.py ${image} ${mask} ${save} 
 
  # Judge if it works.
  if [ $? -eq 0 ]; then
