@@ -1,0 +1,10 @@
+{
+    "data_directory" : "/Users/tanimotoryou/Desktop",
+    "save_directory" : "/Users/tanimotoryou/Desktop",
+    "image_name" : "pred_kidney_resampled_roi.nii.gz",
+    "mask_name" : "pred_kidney_resampled_roi.nii.gz",
+    "save_name" : "label_5.nii.gz",
+    "num_array" : ["001"],
+    "log_file" : "fail/removeMaskedArea.txt"
+}
+
